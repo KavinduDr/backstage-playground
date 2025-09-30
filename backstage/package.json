@@ -53,6 +53,6 @@
   "packageManager": "yarn@4.10.3",
   "dependencies": {
     "@backstage/plugin-auth-backend-module-github-provider": "^0.3.7",
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.3"
   }
 }

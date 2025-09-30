@@ -1,5 +1,5 @@
 {
     "provider": "github",
-    "clientId": "Ov23liOfPJxKlHMk6Hhn",
-    "clientSecret": "475afd24d67791d9eb18a43852619a4127f7cc19"
+    "clientId": "${AUTH_GITHUB_CLIENT_ID}",
+    "clientSecret": "${AUTH_GITHUB_CLIENT_SECRET}"
 }

@@ -40,21 +40,21 @@ auth:
   environment: development
   providers:
     guest: {}
-    github:
-      development:
-        clientId: ${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-    # asgardeo:
+    # github:
     #   development:
-    #     clientId: ${AUTH_ASGARDEO_CLIENT_ID}
-    #     clientSecret: ${AUTH_ASGARDEO_CLIENT_SECRET}
-    #     issuer: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
-    #     authorizationUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize
-    #     tokenUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
-    #     userInfoUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo
-    #     scopes:
-    #       - openid
-    #       - profile
+    #     clientId: ${AUTH_GITHUB_CLIENT_ID}
+    #     clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+    asgardeo:
+      development:
+        clientId: ${AUTH_ASGARDEO_CLIENT_ID}
+        clientSecret: ${AUTH_ASGARDEO_CLIENT_SECRET}
+        issuer: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
+        authorizationUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize
+        tokenUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
+        userInfoUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo
+        scopes:
+          - openid
+          - profile
         signIn:
           resolvers:
             - resolver: usernameMatchingUserEntityAnnotation

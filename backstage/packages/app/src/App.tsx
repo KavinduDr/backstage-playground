@@ -38,6 +38,7 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
+import { LoginPage } from '@internal/plugin-login';
 
 const app = createApp({
   apis,
@@ -60,16 +61,17 @@ const app = createApp({
   },
   components: {
     SignInPage: props => (
-      <SignInPage
-        {...props}
-        auto
-        provider={{
-          id: 'github-auth-provider',
-          title: 'GitHub',
-          message: 'Sign in using GitHub',
-          apiRef: githubAuthApiRef,
-        }}
-      />
+      // <SignInPage
+      //   {...props}
+      //   auto
+      //   provider={{
+      //     id: 'github-auth-provider',
+      //     title: 'GitHub',
+      //     message: 'Sign in using GitHub',
+      //     apiRef: githubAuthApiRef,
+      //   }}
+      // />
+      <LoginPage />
     ),
   },
 });
@@ -109,6 +111,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/notifications" element={<NotificationsPage />} />
+    <Route path="/login" element={<LoginPage />} />
   </FlatRoutes>
 );
 

@@ -27,6 +27,8 @@ backend.add(import('@backstage/plugin-auth-backend'));
 backend.add(import('@backstage/plugin-auth-backend-module-github-provider'));
 // See https://backstage.io/docs/backend-system/building-backends/migrating#the-auth-plugin
 backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
+backend.add(import('@internal/plugin-auth-backend-backend-module-foobar-provider'));
+// backend.add(import('./plugins/auth/providers/asgardeo'));
 // See https://backstage.io/docs/auth/guest/provider
 
 // catalog plugin

@@ -1,5 +1,6 @@
 import { Navigate, Route } from 'react-router-dom';
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
+// import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { asgardeoAuthApiRef } from './apis';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -64,10 +65,10 @@ const app = createApp({
         {...props}
         auto
         provider={{
-          id: 'github-auth-provider',
-          title: 'GitHub',
-          message: 'Sign in using GitHub',
-          apiRef: githubAuthApiRef,
+          id: 'asgardeo',
+          title: 'Asgardeo custom auth provider',
+          message: 'Sign in using Asgardeo',
+          apiRef: asgardeoAuthApiRef,
         }}
       />
     ),

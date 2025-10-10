@@ -52,6 +52,7 @@ auth:
         authorizationUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize
         tokenUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
         userInfoUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo
+        callbackUrl: http://localhost:7007/api/auth/asgardeo/handler/frame
         scopes:
           - openid
           - profile

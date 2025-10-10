@@ -22,10 +22,10 @@ export const providerAuthenticator = createOAuthAuthenticator({
                     clientID: config.getString('clientId'),
                     clientSecret: config.getString('clientSecret'),
                     issuer: config.getString('issuer'),
-                    authorizationURL: config.getString('authorizationURL'),
-                    tokenURL: config.getString('tokenURL'),
+                    authorizationURL: config.getString('authorizationUrl'),
+                    tokenURL: config.getString('tokenUrl'),
                     callbackURL: callbackUrl,
-                    userInfoURL: config.getString('userInfoURL'),
+                    userInfoURL: config.getString('userInfoUrl'),
                     scope: config.getStringArray('scopes').join(' '),
                 },
                 (

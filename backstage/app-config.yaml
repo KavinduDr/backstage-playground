@@ -1,83 +1,74 @@
 app:
   title: Scaffolded Backstage App
   baseUrl: http://localhost:3000
+
 organization:
   name: My Company
+
 backend:
   baseUrl: http://localhost:7007
   listen:
     port: 7007
   csp:
-    connect-src:
-      - '''self'''
-      - 'http:'
-      - 'https:'
+    connect-src: ["'self'", 'http:', 'https:']
   cors:
     origin: http://localhost:3000
-    methods:
-      - GET
-      - HEAD
-      - PATCH
-      - POST
-      - PUT
-      - DELETE
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   database:
     client: better-sqlite3
     connection: ':memory:'
+
+auth:
+  environment: development
+  providers:
+    guest:
+      dangerouslyAllowOutsideDevelopment: true
+    asgardeo:
+      development:
+        clientId: reeG8U2HT5NbLOGHbIDQo5Ljfaoa  
+        clientSecret: IX9Zg3eycTbJzwJIU4KfTbHPezuhx9WZb20xUysE59ga
+        issuer: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token'
+        authorizationUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize'
+        tokenUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token'
+        userInfoUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo'
+        scope: 'openid profile email'
+
 integrations:
   github:
     - host: github.com
       token: ${GITHUB_TOKEN}
-proxy: null
-techdocs:
-  builder: local
-  generator:
-    runIn: docker
-  publisher:
-    type: local
-auth:
-  environment: development
-  providers:
-    guest: {}
-    github:
-      development:
-        clientId: ${AUTH_GITHUB_CLIENT_ID}
-        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-        signIn:
-          resolvers:
-            - resolver: usernameMatchingUserEntityName
-scaffolder: null
+
 catalog:
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow:
-        - Component
-        - System
-        - API
-        - Resource
-        - Location
+    - allow: [Component, System, API, Resource, Location]
   locations:
-    - type: file
-      target: ../../catalog-info.yaml
     - type: file
       target: ../../examples/entities.yaml
     - type: file
       target: ../../examples/template/template.yaml
       rules:
-        - allow:
-            - Template
+        - allow: [Template]
     - type: file
       target: ../../examples/org.yaml
       rules:
-        - allow:
-            - User
-            - Group
-kubernetes: null
+        - allow: [User, Group]
+
+techdocs:
+  builder: 'local'
+  generator:
+    runIn: 'local'
+  publisher:
+    type: 'local'
+
+scaffolder:
+  defaultAuthor:
+    name: Scaffolder
+    email: scaffolder@backstage.io
+  defaultCommitMessage: 'Initial commit'
+
 permission:
   enabled: true
-debug:
-  clientId: ${AUTH_GITHUB_CLIENT_ID}
-  clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}

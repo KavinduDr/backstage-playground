@@ -1,5 +1,5 @@
 import { Navigate, Route } from 'react-router-dom';
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { ApiRef, ProfileInfoApi, BackstageIdentityApi, SessionApi } from '@backstage/core-plugin-api';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -21,7 +21,7 @@ import {
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
-import { apis } from './apis';
+import { apis, asgardeoOidcAuthApiRef } from './apis';
 import { entityPage } from './components/catalog/EntityPage';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
@@ -64,10 +64,12 @@ const app = createApp({
         {...props}
         auto
         provider={{
-          id: 'github-auth-provider',
-          title: 'GitHub',
-          message: 'Sign in using GitHub',
-          apiRef: githubAuthApiRef,
+          id: 'asgardeo-provider',
+          title: 'Asgardeo',
+          message: 'Sign in using Asgardeo',
+          apiRef: asgardeoOidcAuthApiRef as unknown as ApiRef<
+            ProfileInfoApi & BackstageIdentityApi & SessionApi
+          >,
         }}
       />
     ),

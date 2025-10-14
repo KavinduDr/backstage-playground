@@ -31,7 +31,6 @@ export const apis: AnyApiFactory[] = [
   }),
   ScmAuth.createDefaultApiFactory(),
 
-  // Add Asgardeo OAuth API implementation
   createApiFactory({
     api: asgardeoOidcAuthApiRef,
     deps: {
@@ -51,6 +50,7 @@ export const apis: AnyApiFactory[] = [
         },
         environment: configApi.getOptionalString('auth.environment'),
         defaultScopes: ['openid', 'profile', 'email'],
+        popupOptions: {},
       }),
   }),
 ];

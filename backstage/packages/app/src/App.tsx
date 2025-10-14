@@ -68,14 +68,17 @@ const app = createApp({
       <SignInPage
         {...props}
         auto
-        provider={{
-          id: 'asgardeo',
-          title: 'Asgardeo',
-          message: 'Sign in using Asgardeo',
-          apiRef: asgardeoOidcAuthApiRef as unknown as ApiRef<
-            ProfileInfoApi & BackstageIdentityApi & SessionApi
-          >,
-        }}
+        providers={[
+          'guest',
+          {
+            id: 'asgardeo',
+            title: 'Asgardeo',
+            message: 'Sign in using Asgardeo',
+            apiRef: asgardeoOidcAuthApiRef as unknown as ApiRef<
+              ProfileInfoApi & BackstageIdentityApi & SessionApi
+            >,
+          },
+        ]}
       />
     ),
   },

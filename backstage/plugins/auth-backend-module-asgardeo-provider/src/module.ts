@@ -7,7 +7,6 @@ import {
   PassportOAuthDoneCallback,
 } from '@backstage/plugin-auth-node';
 import { Strategy as OAuth2Strategy } from 'passport-oauth2';
-import { stringifyEntityRef, DEFAULT_NAMESPACE } from '@backstage/catalog-model';
 
 const asgardeoAuthenticator = createOAuthAuthenticator({
   defaultProfileTransform:
@@ -95,8 +94,8 @@ const asgardeoAuthenticator = createOAuthAuthenticator({
           id: profile.sub,
           displayName: profile.name || profile.username || profile.email,
           username: profile.username || profile.email?.split('@')[0],
-          emails: profile.email ? [{ value: profile.email }] : [],
-          email: profile.email,
+          emails: profile.email ? [{ value: profile.email }] : (profile.username?.includes('@') ? [{ value: profile.username }] : []),
+          email: profile.email || (profile.username?.includes('@') ? profile.username : undefined),
           name: {
             familyName: profile.family_name,
             givenName: profile.given_name,
@@ -181,42 +180,40 @@ export const authModuleAsgardeoProvider = createBackendModule({
 
               const { profile } = info;
 
-              // Check for email in different possible locations
+              // Check for email in different possible locations, fallback to username if it looks like an email
               const email =
                 profile.email || "" || null;
 
+              const displayName = profile.displayName || email || 'User';
+
               console.log('📧 Email extracted:', email);
+              console.log('👤 Display name:', displayName);
 
               if (!email) {
                 console.error('❌ No email found in profile');
                 console.error('📋 Full profile:', JSON.stringify(profile, null, 2));
                 throw new Error(
-                  `User profile does not contain an email. Profile: ${JSON.stringify(profile)}`
+                  `User profile does not contain an email or email-like username. Profile: ${JSON.stringify(profile)}`
                 );
               }
 
-              // Create user entity reference from email
-              const username = email.split('@')[0];
-              const userEntityRef = stringifyEntityRef({
-                kind: 'User',
-                name: username,
-                namespace: DEFAULT_NAMESPACE,
+              // Create user identifier from email (username before @)
+              const userId = email.split('@')[0];
+
+              console.log('🎫 Issuing token for user:', userId);
+              console.log('✅ Allowing any authenticated user (no catalog lookup)');
+
+              // Issue a token WITHOUT checking the catalog
+              // This allows any authenticated user from Asgardeo to access Backstage
+              const signInResult = await ctx.issueToken({
+                claims: {
+                  sub: `user:default/${userId}`, // ✅ Full entity ref format
+                  ent: [`user:default/${userId}`], // entities - user entity reference
+                },
               });
 
-              console.log('👤 User entity ref:', userEntityRef);
-              console.log('🔍 Attempting to sign in with catalog user...');
-
-              try {
-                const signInResult = await ctx.signInWithCatalogUser({
-                  entityRef: userEntityRef,
-                });
-                console.log('✅ Sign-in successful:', signInResult);
-                return signInResult;
-              } catch (error) {
-                console.error('❌ Sign-in with catalog user failed:', error);
-                console.error('💡 Make sure a User entity exists in the catalog with name:', username);
-                throw error;
-              }
+              console.log('✅ Token issued successfully for:', userId);
+              return signInResult;
             },
           }),
         });

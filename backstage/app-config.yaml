@@ -1,19 +1,25 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: https://localhost:3000  # Frontend stays HTTP
 organization:
   name: My Company
 backend:
-  baseUrl: http://localhost:7007
+  baseUrl: https://localhost:7007  # Backend uses HTTPS
   listen:
     port: 7007
+  https:
+    certificate:
+      cert:
+        $file: ./certs/localhost-cert.pem
+      key:
+        $file: ./certs/localhost-key.pem
   csp:
     connect-src:
       - '''self'''
       - 'http:'
       - 'https:'
   cors:
-    origin: http://localhost:3000
+    origin: https://localhost:3000
     methods:
       - GET
       - HEAD

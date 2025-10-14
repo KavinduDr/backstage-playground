@@ -54,3 +54,8 @@ e2e-test-report/
 
 # Cache
 .cache/
+
+# SSL certificates
+certs/
+*.pem
+*.key

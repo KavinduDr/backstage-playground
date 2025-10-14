@@ -1,26 +1,21 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: https://localhost:3000
+  baseUrl: http://localhost:3000
 
 organization:
   name: My Company
 
 backend:
-  baseUrl: https://localhost:7007
+  baseUrl: http://localhost:7007
   listen:
     port: 7007
-  https:
-    certificate:
-      cert:
-        $file: ./certs/localhost-cert.pem
-      key:
-        $file: ./certs/localhost-key.pem
   csp:
     connect-src: ["'self'", 'http:', 'https:']
   cors:
-    origin: https://localhost:3000
+    origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
   database:
     client: better-sqlite3
     connection: ':memory:'
@@ -32,14 +27,25 @@ auth:
       dangerouslyAllowOutsideDevelopment: true
     asgardeo:
       development:
-        metadataUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/.well-known/openid-configuration'
-        clientId: reeG8U2HT5NbLOGHbIDQo5Ljfaoa  
+        clientId: reeG8U2HT5NbLOGHbIDQo5Ljfaoa
         clientSecret: IX9Zg3eycTbJzwJIU4KfTbHPezuhx9WZb20xUysE59ga
-        issuer: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token'
-        authorizationUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize'
-        tokenUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token'
-        userInfoUrl: 'https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo'
-        scope: 'openid profile email'
+        issuer: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
+        authorizationUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize
+        tokenUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
+        userInfoUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/userinfo
+        callbackUrl: http://localhost:7007/api/auth/asgardeo/handler/frame
+        scopes:
+          - openid
+          - profile
+          - email
+        signIn:
+          resolver:
+            [
+              {
+                resolver: 'emailMatchingUserEntityNameProfile',
+                profileTransform: 'asgardeo',
+              },
+            ]
 
 integrations:
   github:

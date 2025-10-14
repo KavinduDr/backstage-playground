@@ -2,8 +2,10 @@ import { createBackendModule } from '@backstage/backend-plugin-api';
 import {
   authProvidersExtensionPoint,
   createOAuthAuthenticator,
+  createOAuthProviderFactory,
   PassportOAuthAuthenticatorHelper,
   PassportOAuthDoneCallback,
+  commonSignInResolvers,
 } from '@backstage/plugin-auth-node';
 import { Strategy as OAuth2Strategy } from 'passport-oauth2';
 
@@ -31,7 +33,7 @@ const asgardeoAuthenticator = createOAuthAuthenticator({
         },
         (
           accessToken: string,
-          refreshToken: string,
+          _refreshToken: string,
           params: any,
           fullProfile: any,
           done: PassportOAuthDoneCallback,
@@ -47,23 +49,17 @@ const asgardeoAuthenticator = createOAuthAuthenticator({
       ),
     );
   },
-  async start(input, ctx) {
-    // Get user info after authentication
-    const userInfoURL = ctx.config.getString('userInfoUrl');
-    const response = await fetch(userInfoURL, {
-      headers: {
-        Authorization: `Bearer ${input.accessToken}`,
-      },
+  async start(input, helper) {
+    return helper.start(input, {
+      accessType: 'offline',
+      prompt: 'consent',
     });
-    const profile = await response.json();
-
-    return {
-      profile: {
-        email: profile.email,
-        displayName: profile.name || profile.username,
-        picture: profile.picture,
-      },
-    };
+  },
+  async authenticate(input, helper) {
+    return helper.authenticate(input);
+  },
+  async refresh(input, helper) {
+    return helper.refresh(input);
   },
 });
 
@@ -78,7 +74,10 @@ export const authModuleAsgardeoProvider = createBackendModule({
       async init({ providers }) {
         providers.registerProvider({
           providerId: 'asgardeo',
-          factory: asgardeoAuthenticator,
+          factory: createOAuthProviderFactory({
+            authenticator: asgardeoAuthenticator,
+            signInResolverFactories: commonSignInResolvers,
+          }),
         });
       },
     });

@@ -20,7 +20,7 @@ import { OAuth2 } from '@backstage/core-app-api';
 export const asgardeoOidcAuthApiRef = createApiRef<
   OpenIdConnectApi & ProfileInfoApi & BackstageIdentityApi & SessionApi
 >({
-  id: 'auth.asgardeo-provider',
+  id: 'auth.asgardeo',
 });
 
 export const apis: AnyApiFactory[] = [
@@ -43,6 +43,7 @@ export const apis: AnyApiFactory[] = [
       OAuth2.create({
         discoveryApi,
         oauthRequestApi,
+        configApi,
         provider: {
           id: 'asgardeo',
           title: 'Asgardeo',

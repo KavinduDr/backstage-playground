@@ -1,5 +1,10 @@
 import { Navigate, Route } from 'react-router-dom';
-import { ApiRef, ProfileInfoApi, BackstageIdentityApi, SessionApi } from '@backstage/core-plugin-api';
+import {
+  ApiRef,
+  ProfileInfoApi,
+  BackstageIdentityApi,
+  SessionApi,
+} from '@backstage/core-plugin-api';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -64,7 +69,7 @@ const app = createApp({
         {...props}
         auto
         provider={{
-          id: 'asgardeo-provider',
+          id: 'asgardeo',
           title: 'Asgardeo',
           message: 'Sign in using Asgardeo',
           apiRef: asgardeoOidcAuthApiRef as unknown as ApiRef<

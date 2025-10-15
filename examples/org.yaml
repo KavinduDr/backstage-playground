@@ -11,21 +11,12 @@ spec:
     email: test@gmail.com
   memberOf: []
 ---
-apiVersion: backstage.io/v1alpha1
-kind: User
-metadata:
-  name: rmkavindudhananjaya
-spec:
-  profile:
-    displayName: Kavindu Dhananjaya
-    email: rmkavindudhananjaya@gmail.com
-  memberOf: []
----
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
   name: guests
+  description: Guest users
   description: Guest users
 spec:
   type: team

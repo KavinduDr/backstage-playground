@@ -17,6 +17,7 @@ kind: Group
 metadata:
   name: guests
   description: Guest users
+  description: Guest users
 spec:
   type: team
   children: []

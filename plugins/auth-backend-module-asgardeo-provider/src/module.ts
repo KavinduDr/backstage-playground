@@ -78,6 +78,7 @@ const asgardeoAuthenticator = createOAuthAuthenticator({
 
         console.log('📡 Response status:', response.status);
         console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+        console.log('📡 Response content:', response);
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -92,7 +93,7 @@ const asgardeoAuthenticator = createOAuthAuthenticator({
         const passportProfile = {
           provider: 'asgardeo',
           id: profile.sub,
-          displayName: profile.name || profile.username || profile.email,
+          displayName: profile.name || profile.displayName || profile.username || profile.email,
           username: profile.username || profile.email?.split('@')[0],
           emails: profile.email ? [{ value: profile.email }] : (profile.username?.includes('@') ? [{ value: profile.username }] : []),
           email: profile.email || (profile.username?.includes('@') ? profile.username : undefined),

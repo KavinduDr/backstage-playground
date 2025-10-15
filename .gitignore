@@ -1,0 +1,6 @@
+.env
+.yarn
+node_modules
+dist
+dist-types
+/certs/*

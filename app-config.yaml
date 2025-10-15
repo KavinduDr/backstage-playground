@@ -27,8 +27,8 @@ auth:
       dangerouslyAllowOutsideDevelopment: true
     asgardeo:
       development:
-        clientId: reeG8U2HT5NbLOGHbIDQo5Ljfaoa
-        clientSecret: IX9Zg3eycTbJzwJIU4KfTbHPezuhx9WZb20xUysE59ga
+        clientId: 
+        clientSecret: 
         issuer: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
         authorizationUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/authorize
         tokenUrl: https://api.asgardeo.io/t/starkindustriesdemo/oauth2/token
